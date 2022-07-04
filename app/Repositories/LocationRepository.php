@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\LocationContract;
 use App\Models\Location;
+use Illuminate\Database\Eloquent\Collection;
 
 class LocationRepository implements LocationContract
 {
@@ -21,16 +22,10 @@ class LocationRepository implements LocationContract
 
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function index(): array
+    public function getAll(): Collection
     {
-        $locations = $this->location::all();
-        if ($locations) {
-
-            return ['success' => 1,'locations' => $this->location::all()];
-        }
-        return ['success' => 0];
-
+        return $this->location::all();
     }
 }

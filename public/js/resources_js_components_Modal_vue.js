@@ -158,10 +158,34 @@ __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css */ "./node_
                 return _context.abrupt("return", _this.updated = false);
 
               case 19:
+                if (!(_this.selected.length === 0 && _this.name.length === 0)) {
+                  _context.next = 23;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.error = 'Location and name required');
+
+              case 23:
+                if (!(_this.selected.length === 0)) {
+                  _context.next = 27;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.error = 'Location is required');
+
+              case 27:
+                if (!(_this.name.length === 0)) {
+                  _context.next = 29;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.error = 'Office name is required');
+
+              case 29:
                 _this.error = 'Invalid Data';
                 return _context.abrupt("return", _this.updated = false);
 
-              case 21:
+              case 31:
               case "end":
                 return _context.stop();
             }

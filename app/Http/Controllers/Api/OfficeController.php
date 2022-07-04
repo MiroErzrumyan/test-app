@@ -27,69 +27,32 @@ class OfficeController extends Controller
         $this->officeContract = $officeContract;
     }
 
+
     /**
-     * @return OfficeCollection|MessageResource
+     * @param Request $request
+     * @return OfficeCollection
      */
 
-    public function index(Request $request): OfficeCollection|MessageResource
+    public function index(Request $request): OfficeCollection
     {
-        $checked = $request->input('checked') === 'true' ? true: false;
+        $checked = $request->input('checked') === 'true' ? true : false;
         $skip = intval($request->input('skip'));
-        $data = ['checked' => $checked,'skip' => $skip];
-        $officeContract = $this->officeContract->index($data,['locations']);
-        if ($officeContract ['success'] === 1) {
-            return new OfficeCollection(['offices' => $officeContract ['offices'], 'success' => 1]);
-        }
-        return new MessageResource(['success' => 0]);
-    }
+        $data = ['checked' => $checked, 'skip' => $skip,'id' => Auth::id()];
+        $offices = $this->officeContract->index($data, ['locations']);
+        return new OfficeCollection(['offices' => $offices, ['offices'], 'success' => 1]);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
     }
 
 
     /**
      * @param OfficeStoreRequest $request
-     * @return MessageResource|OfficeResource
+     * @return OfficeResource
      */
-    public function store(OfficeStoreRequest $request): MessageResource|OfficeResource
+    public function store(OfficeStoreRequest $request): OfficeResource
     {
-
-        $officeContract = $this->officeContract->store(['name' => $request->input('name'), 'user_id' => Auth::id()]);
-        if ($officeContract['success'] === 1) {
-            $officeContract['office']->locations()->sync($request->input('locations'));
-            return new OfficeResource(['success' => $officeContract['success'], 'office' => $officeContract['office']]);
-        }
-        return new MessageResource(['success' => 0]);
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
+        $office = $this->officeContract->store(['name' => $request->input('name'), 'user_id' => Auth::id()]);
+        $office->locations()->sync($request->input('locations'));
+        return new OfficeResource(['success' => 1, 'office' => $office]);
     }
 
     /**
@@ -99,12 +62,9 @@ class OfficeController extends Controller
      */
     public function update(OfficeUpdateRequest $request, Office $office): MessageResource
     {
-        $officeContract = $this->officeContract->update(['name' => $request->input('name')],$office->id);
-        if ($officeContract['success'] === 1){
-            $office->locations()->sync($request->input('locations'));
-            return new MessageResource(['success' => $officeContract['success']]);
-        }
-        return new MessageResource(['success' => $officeContract['success']]);
+        $updatedOffice = $this->officeContract->update(['name' => $request->input('name')], $office['id']);
+        $office->locations()->sync($request->input('locations'));
+        return new MessageResource(['success' => $updatedOffice]);
     }
 
 
@@ -116,6 +76,6 @@ class OfficeController extends Controller
     {
         $office->locations()->sync([]);
         $destroy = $this->officeContract->destroy($office['id']);
-        return new MessageResource(['success' => $destroy['success']]);
+        return new MessageResource(['success' => $destroy]);
     }
 }

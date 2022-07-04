@@ -26,11 +26,8 @@ class LocationController extends Controller
 
     public function index(): LocationCollection|MessageResource
     {
-        $response = $this->locationContract->index();
-        if ($response['success'] === 1 ){
-            return new LocationCollection(['success' => $response['success'],'locations' => $response['locations']]);
-        }
-        return new MessageResource(['success' => 0]);
+        $locations = $this->locationContract->getAll();
+        return new LocationCollection(['success' => 1,'locations' => $locations]);
 
     }
 }

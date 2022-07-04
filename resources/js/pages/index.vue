@@ -1,9 +1,10 @@
 <template>
     <div>
-        <div class="d-flex justify-content-center" v-if=" !showAll">
+        <div class="d-flex justify-content-center" v-if=" !showAll ">
             <h2 class="text-danger"> {{ noData }}</h2>
         </div>
-        <div class="overflow-auto" v-if="show">
+
+        <div class="overflow-auto" v-if="show && items.length > 0">
             <div class="container mt-4">
                 <div class="d-flex justify-content-center flex-wrap">
                     <div>
@@ -40,7 +41,7 @@
                             <b-card-text class="mt-2 mb-2">
                                 <h5 class="d-inline">locations:</h5>
                                 <span v-for="(location,index) in item.locations" class="small">
-                                {{
+                                    {{
                                         index + 1 === item.locations.length ? location.address_1 + '.' : location.address_1 + ',' + ' '
                                     }}
                              </span>
@@ -131,7 +132,7 @@ export default {
                 });
                 let data = response.data.data
 
-                if (data.success === 1) {
+                if (data.success === 1 && data.offices.length > 0) {
                     setTimeout(() => {
                         for (let i = 0; i < data.offices.length; i++) {
                             this.items.push(data.offices[i])
@@ -146,7 +147,7 @@ export default {
             this.skip = 0
             this.getData()
         },
-        async confirmation(){
+        async confirmation() {
             this.boxTwo = ''
             let response = await this.$bvModal.msgBoxConfirm('Please confirm that you want to delete your office.', {
                 title: 'Please Confirm',
@@ -166,27 +167,31 @@ export default {
             let confirmAnswer = await this.confirmation()
             if (confirmAnswer) {
                 let response = await axios.delete(`/api/office/${this.deleteOffice}`)
-                    if (response.data.data.success === 1) {
-                        this.deletedMessage = ''
-                        this.skip = 0
-                        return this.getData()
-                    }
-                    this.deletedMessage = 'Your office was not delete'
+                if (response.data.data.success === 1) {
+                    this.deletedMessage = ''
+                    this.skip = 0
+                    return this.getData()
+                }
+                this.deletedMessage = 'Your office was not delete'
             }
         },
         async getData() {
             let response = await this.getOffices({'checked': this.checked, 'skip': this.skip})
             this.loader = false
             if (response.success === 1) {
-                this.noData = ''
-                this.showAll = true
-                this.skip = this.skip + this.offices.length
-                this.items = this.offices
-                this.total = this.offices.last_page
-                this.show = true
-                return this.rows = this.offices.total
+                if (response.offices.length > 0){
+                    this.noData = ''
+                    this.showAll = true
+                    this.skip = this.skip + this.offices.length
+                    this.items = this.offices
+                    this.total = this.offices.last_page
+                    this.show = true
+                    return this.rows = this.offices.total
+                }
+                this.showAll = false
+                return this.noData = 'There are no data'
             }
-            if (this.checked){
+            if (this.checked) {
                 this.showAll = false
                 return this.noData = "You don't have office"
             }

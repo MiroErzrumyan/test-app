@@ -3,34 +3,36 @@
         <div v-if="show">
             <h1>Login your account</h1>
 
-        <div class="screen center " style="margin-top: 4rem">
-            <div class="screen__content">
-                <form class="login text-center">
-                    <h4 class="text-danger">{{errorInvalid}}</h4>
-                    <div class="login__field">
-                        <input type="text" class="login__input" :class="borderError ? 'border-danger' : ''" placeholder=" Email" v-model="form.email">
-                    </div>
-                    <div class="login__field">
-                        <input type="password" class="login__input" :class="borderError ? 'border-danger' : ''" placeholder="Password" v-model="form.password">
-                    </div>
-                    <button class="button login__submit" @click.stop.prevent="sendData">
-                        <span class="button__text">Log In </span>
-                    </button>
-                    <div class="d-flex justify-content-end mt-4" >
-                        <router-link to="/register" class="text-decoration-none text-white router">
-                            Register?
-                        </router-link>
-                    </div>
-                </form>
-                <router-link to="/register"></router-link>
+            <div class="screen center " style="margin-top: 4rem">
+                <div class="screen__content">
+                    <form class="login text-center">
+                        <h4 class="text-danger">{{ errorInvalid }}</h4>
+                        <div class="login__field">
+                            <input type="text" class="login__input" :class="borderEmailError ? 'border-danger' : ''"
+                                   placeholder=" Email" v-model="form.email">
+                        </div>
+                        <div class="login__field">
+                            <input type="password" class="login__input" :class="borderPasswordError ? 'border-danger' : ''"
+                                   placeholder="Password" v-model="form.password">
+                        </div>
+                        <button class="button login__submit" @click.stop.prevent="sendData">
+                            <span class="button__text">Log In </span>
+                        </button>
+                        <div class="d-flex justify-content-end mt-4">
+                            <router-link to="/register" class="text-decoration-none text-white router">
+                                Register?
+                            </router-link>
+                        </div>
+                    </form>
+                    <router-link to="/register"></router-link>
+                </div>
+                <div class="screen__background">
+                    <span class="screen__background__shape screen__background__shape4"></span>
+                    <span class="screen__background__shape screen__background__shape3"></span>
+                    <span class="screen__background__shape screen__background__shape2"></span>
+                    <span class="screen__background__shape screen__background__shape1"></span>
+                </div>
             </div>
-            <div class="screen__background">
-                <span class="screen__background__shape screen__background__shape4"></span>
-                <span class="screen__background__shape screen__background__shape3"></span>
-                <span class="screen__background__shape screen__background__shape2"></span>
-                <span class="screen__background__shape screen__background__shape1"></span>
-            </div>
-        </div>
 
         </div>
 
@@ -38,7 +40,7 @@
 </template>
 <script>
 
-import {mapActions,mapGetters} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
     name: "Login",
@@ -52,27 +54,41 @@ export default {
             show: true,
             errorInvalid: '',
             regex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-            borderError: false,
+            borderEmailError: false,
+            borderPasswordError: false,
         }
     },
     computed: {
         ...mapGetters(['user']),
 
     },
+    watch: {
+        'form.email'(val) {
+            if (val.length  > 0) {
+                this.borderEmailError = false
+            }
+        },
+        'form.password'(val) {
+            if (val.length > 0 ) {
+                this.borderPasswordError = false
+            }
+        },
+    },
     methods: {
         ...mapActions(['loginRequest']),
 
         async sendData() {
-            if(!this.regex.test(this.form.email) || this.form.password.length < 6 ){
-                this.borderError = true
+            if (!this.regex.test(this.form.email) || this.form.password.length < 6) {
+                this.borderPasswordError = true
+                this.borderEmailError = true
                 return this.errorInvalid = "Wrong password or Email"
             }
             this.errorInvalid = ""
             this.borderError = false
             let response = await this.loginRequest(this.form)
-            if (response.success === 1){
-                window.axios.defaults.headers.common['Authorization'] = 'Bearer ' +  this.$cookies.get('token');
-                return this.$router.push({path:"/"})
+            if (response.success === 1) {
+                window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$cookies.get('token');
+                return this.$router.push({path: "/"})
             }
             this.errorInvalid = "Wrong password or email"
         },

@@ -2,31 +2,34 @@
 
 namespace App\Contracts;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+
 interface OfficeContract
 {
     /**
      * @param $checked
      * @param $relations
-     * @return mixed
+     * @return Collection
      */
-    public function index($checked, $relations): array;
+    public function index($checked, $relations): Collection;
 
     /**
      * @param $data
-     * @return mixed
+     * @return Model
      */
-    public function store($data): array;
+    public function store($data): Model;
 
     /**
      * @param $updateData
      * @param $updateId
-     * @return array
+     * @return int
      */
-    public function update($updateData, $updateId): array;
+    public function update($updateData, $updateId): int;
 
     /**
      * @param $deleteId
-     * @return mixed
+     * @return int
      */
-    public function destroy($deleteId): array;
+    public function destroy($deleteId): int;
 }

@@ -98,6 +98,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "index",
@@ -169,7 +170,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 response = _context.sent;
                 data = response.data.data;
 
-                if (!(data.success === 1)) {
+                if (!(data.success === 1 && data.offices.length > 0)) {
                   _context.next = 9;
                   break;
                 }
@@ -297,7 +298,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this4.loader = false;
 
                 if (!(response.success === 1)) {
-                  _context4.next = 12;
+                  _context4.next = 15;
+                  break;
+                }
+
+                if (!(response.offices.length > 0)) {
+                  _context4.next = 13;
                   break;
                 }
 
@@ -309,19 +315,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this4.show = true;
                 return _context4.abrupt("return", _this4.rows = _this4.offices.total);
 
-              case 12:
+              case 13:
+                _this4.showAll = false;
+                return _context4.abrupt("return", _this4.noData = 'There are no data');
+
+              case 15:
                 if (!_this4.checked) {
-                  _context4.next = 15;
+                  _context4.next = 18;
                   break;
                 }
 
                 _this4.showAll = false;
                 return _context4.abrupt("return", _this4.noData = "You don't have office");
 
-              case 15:
+              case 18:
                 return _context4.abrupt("return", _this4.noData = 'There are no data');
 
-              case 16:
+              case 19:
               case "end":
                 return _context4.stop();
             }
@@ -496,7 +506,7 @@ var render = function () {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.show
+    _vm.show && _vm.items.length > 0
       ? _c(
           "div",
           { staticClass: "overflow-auto" },
@@ -657,7 +667,7 @@ var render = function () {
                                         { staticClass: "small" },
                                         [
                                           _vm._v(
-                                            "\n                            " +
+                                            "\n                                " +
                                               _vm._s(
                                                 index + 1 ===
                                                   item.locations.length

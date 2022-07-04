@@ -102,6 +102,13 @@ export default {
                     }
                 }
             }
+            if (this.selected.length === 0 && this.name.length === 0 ){
+                return this.error = 'Location and name required'
+            }else if (this.selected.length === 0){
+                return this.error = 'Location is required'
+            }else if (this.name.length === 0){
+                return this.error = 'Office name is required'
+            }
             this.error = 'Invalid Data'
             return this.updated = false
 

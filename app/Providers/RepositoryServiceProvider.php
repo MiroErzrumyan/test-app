@@ -2,14 +2,13 @@
 
 namespace App\Providers;
 
-use App\Contracts\AuthContract;
-use App\Contracts\LocationContract;
 use App\Contracts\OfficeContract;
-use App\Repositories\AuthRepository;
-use App\Repositories\LocationRepository;
+use App\Contracts\LocationContract;
+use App\Contracts\UserContract;
 use App\Repositories\OfficeRepository;
+use App\Repositories\LocationRepository;
 use Illuminate\Support\ServiceProvider;
-
+use App\Repositories\UserRepository;
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -30,8 +29,8 @@ class RepositoryServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->singleton(
-            AuthContract::class,
-            AuthRepository::class
+            UserContract::class,
+            UserRepository::class
         );
         $this->app->singleton(
             OfficeContract::class,

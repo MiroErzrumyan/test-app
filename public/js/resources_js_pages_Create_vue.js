@@ -166,14 +166,13 @@ __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css */ "./node_
               data = response.data.data;
 
               if (!(data.success === 1)) {
-                _context2.next = 7;
+                _context2.next = 6;
                 break;
               }
 
-              _this2.locations = data.locations;
-              return _context2.abrupt("return");
+              return _context2.abrupt("return", _this2.locations = data.locations);
 
-            case 7:
+            case 6:
             case "end":
               return _context2.stop();
           }

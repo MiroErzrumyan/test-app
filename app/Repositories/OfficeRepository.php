@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Contracts\OfficeContract;
 use App\Models\Office;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class OfficeRepository implements OfficeContract
@@ -18,37 +20,30 @@ class OfficeRepository implements OfficeContract
         $this->office = $office;
     }
 
+
     /**
      * @param $data
      * @param $relations
-     * @return array|int[]
+     * @return Collection
      */
-    public function index($data, $relations): array
+    public function index($data, $relations): Collection
     {
         if (!$data['checked']) {
             $offices = $this->office::with($relations)->skip($data['skip'])->take(10)->get();
         } else {
-            $offices = $this->office::with($relations)->where('user_id', Auth::id())->skip($data['skip'])->take(10)->get();
+            $offices = $this->office::with($relations)->where('user_id', $data['id'])->skip($data['skip'])->take(10)->get();
         }
-        if (!$offices->isEmpty() ) {
-            return ['success' => 1, 'offices' => $offices];
-        }
-        return ['success' => 0];
-
+        return $offices;
     }
+
 
     /**
      * @param $data
-     * @return array|int[]
+     * @return Model
      */
-    public function store($data): array
+    public function store($data): Model
     {
-        $office = $this->office::create($data);
-        if ($office) {
-            return ['success' => 1, 'office' => $office];
-
-        }
-        return ['success' => 0];
+        return $this->office::create($data);
     }
 
     /**
@@ -56,21 +51,18 @@ class OfficeRepository implements OfficeContract
      * @param $updateId
      * @return array
      */
-    public function update($updateData, $updateId): array
+    public function update($updateData, $updateId): int
     {
-        $office = $this->office::where('id',$updateId)->update($updateData);
-        return ['success' => $office];
-
+        return $this->office::where('id', $updateId)->update($updateData);
     }
+
 
     /**
      * @param $deleteId
-     * @return array
+     * @return int
      */
-
-    public function destroy($deleteId): array
+    public function destroy($deleteId): int
     {
-        $destroy = $this->office::destroy($deleteId);
-        return ['success' => $destroy];
+        return $this->office::destroy($deleteId);
     }
 }

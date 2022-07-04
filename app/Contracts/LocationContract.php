@@ -2,10 +2,12 @@
 
 namespace App\Contracts;
 
+use Illuminate\Database\Eloquent\Collection;
+
 interface LocationContract
 {
     /**
-     * @return array
+     * @return Collection
      */
-    public function index(): array;
+    public function getAll(): Collection;
 }

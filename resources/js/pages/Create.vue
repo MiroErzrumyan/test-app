@@ -85,8 +85,8 @@ export default {
         let response = await axios.get('/api/locations')
         let data = response.data.data
         if (data.success === 1) {
-            this.locations = data.locations
-            return
+            return this.locations = data.locations
+
         }
     }
 }

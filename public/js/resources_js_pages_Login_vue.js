@@ -64,6 +64,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Login",
@@ -77,10 +79,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       show: true,
       errorInvalid: '',
       regex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      borderError: false
+      borderEmailError: false,
+      borderPasswordError: false
     };
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['user'])),
+  watch: {
+    'form.email': function formEmail(val) {
+      if (val.length > 0) {
+        this.borderEmailError = false;
+      }
+    },
+    'form.password': function formPassword(val) {
+      if (val.length > 0) {
+        this.borderPasswordError = false;
+      }
+    }
+  },
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['loginRequest'])), {}, {
     sendData: function sendData() {
       var _this = this;
@@ -92,24 +107,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 if (!(!_this.regex.test(_this.form.email) || _this.form.password.length < 6)) {
-                  _context.next = 3;
+                  _context.next = 4;
                   break;
                 }
 
-                _this.borderError = true;
+                _this.borderPasswordError = true;
+                _this.borderEmailError = true;
                 return _context.abrupt("return", _this.errorInvalid = "Wrong password or Email");
 
-              case 3:
+              case 4:
                 _this.errorInvalid = "";
                 _this.borderError = false;
-                _context.next = 7;
+                _context.next = 8;
                 return _this.loginRequest(_this.form);
 
-              case 7:
+              case 8:
                 response = _context.sent;
 
                 if (!(response.success === 1)) {
-                  _context.next = 11;
+                  _context.next = 12;
                   break;
                 }
 
@@ -118,10 +134,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   path: "/"
                 }));
 
-              case 11:
+              case 12:
                 _this.errorInvalid = "Wrong password or email";
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -317,7 +333,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "login__input",
-                        class: _vm.borderError ? "border-danger" : "",
+                        class: _vm.borderEmailError ? "border-danger" : "",
                         attrs: { type: "text", placeholder: " Email" },
                         domProps: { value: _vm.form.email },
                         on: {
@@ -342,7 +358,7 @@ var render = function () {
                           },
                         ],
                         staticClass: "login__input",
-                        class: _vm.borderError ? "border-danger" : "",
+                        class: _vm.borderPasswordError ? "border-danger" : "",
                         attrs: { type: "password", placeholder: "Password" },
                         domProps: { value: _vm.form.password },
                         on: {
@@ -388,7 +404,7 @@ var render = function () {
                           },
                           [
                             _vm._v(
-                              "\n                        Register?\n                    "
+                              "\n                            Register?\n                        "
                             ),
                           ]
                         ),

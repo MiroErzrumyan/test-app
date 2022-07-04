@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\OfficeController;
 use Illuminate\Http\Request;
@@ -20,17 +20,17 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::post('/register' , [AuthController::class, 'register']);
-Route::post('/login' , [AuthController::class, 'login']);
+Route::post('/register' , [UserController::class, 'register']);
+Route::post('/login' , [UserController::class, 'login']);
 
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('/office',OfficeController::class)
         ->except(['create', 'edit']);
 
-    Route::get('/getAuth' , [AuthController::class, 'getAuth']);
+    Route::get('/getAuth' , [UserController::class, 'getAuth']);
     Route::get('/locations', [LocationController::class,'index']);
 
-    Route::post('/logout' , [AuthController::class, 'logout']);
+    Route::post('/logout' , [UserController::class, 'logout']);
 });
 
