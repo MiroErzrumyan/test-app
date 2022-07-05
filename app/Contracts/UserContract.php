@@ -11,6 +11,5 @@ interface UserContract
      * @param $data
      * @return Model
      */
-
     public function register($data): Model;
 }

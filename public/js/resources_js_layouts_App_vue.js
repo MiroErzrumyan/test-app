@@ -63,6 +63,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Navbar",
@@ -467,7 +477,11 @@ var render = function () {
                       staticClass: "text-dark fs-5 text-decoration-none ",
                       attrs: { to: "/register" },
                     },
-                    [_vm._v("Register")]
+                    [
+                      _vm._v(
+                        "\n                        Register\n                    "
+                      ),
+                    ]
                   ),
                 ],
                 1
@@ -491,7 +505,7 @@ var render = function () {
                       staticClass: "text-dark fs-5 text-decoration-none mx-3",
                       attrs: { to: "/" },
                     },
-                    [_vm._v("Home")]
+                    [_vm._v("Home\n                    ")]
                   ),
                 ],
                 1
@@ -515,7 +529,39 @@ var render = function () {
                       staticClass: "text-dark fs-5 text-decoration-none mx-3",
                       attrs: { to: "/store" },
                     },
-                    [_vm._v("Create Office")]
+                    [
+                      _vm._v(
+                        "Create\n                        Office\n                    "
+                      ),
+                    ]
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.show,
+                          expression: "!show",
+                        },
+                      ],
+                      staticClass: "text-dark fs-5 text-decoration-none mx-3",
+                      attrs: { to: "/storeTeam" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Create Team\n                    "
+                      ),
+                    ]
                   ),
                 ],
                 1

@@ -78,4 +78,10 @@ class OfficeController extends Controller
         $destroy = $this->officeContract->destroy($office['id']);
         return new MessageResource(['success' => $destroy]);
     }
+
+    public function getByUserId()
+    {
+        $offices = $this->officeContract->getByUserId(['user_id' =>Auth::id()]);
+        return new OfficeCollection(['offices' => $offices, ['offices'], 'success' => 1]);
+    }
 }

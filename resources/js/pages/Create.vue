@@ -22,11 +22,13 @@
                     <label for="multiSelect " class="mt-4">Office location</label>
                     <div class=" border-2">
 
-                        <multiselect v-model="selected" :options="locations" :limit="1" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some" label="address_1" track-by="address_1" :preselect-first="true">
+                        <multiselect v-model="selected" :options="locations" :limit="1" :multiple="true"
+                                     :close-on-select="false" :clear-on-select="false" :preserve-search="true"
+                                     placeholder="Pick some" label="address_1" track-by="address_1"
+                                     :preselect-first="true">
                         </multiselect>
                     </div>
                     <div class="d-flex justify-content-center mt-5">
-
                         <button class="btn btn-primary" @click.stop.prevent="sendData">Submit</button>
                     </div>
                 </form>
@@ -38,7 +40,7 @@
 
 <script>
 import Multiselect from 'vue-multiselect'
-require('vue-multiselect/dist/vue-multiselect.min.css')
+
 export default {
     name: "Create",
     data() {
@@ -58,7 +60,7 @@ export default {
             if (Object.keys(this.selected).length && this.name.length >= 3) {
                 try {
                     let officeLocationsId = [];
-                    for (let i = 0;i < this.selected.length;i++){
+                    for (let i = 0; i < this.selected.length; i++) {
                         officeLocationsId.push(this.selected[i].id)
                     }
                     let office = {

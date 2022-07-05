@@ -32,4 +32,10 @@ interface OfficeContract
      * @return int
      */
     public function destroy($deleteId): int;
+
+    /**
+     * @param $id
+     * @return Collection
+     */
+    public function getByUserId($id): Collection;
 }

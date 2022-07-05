@@ -1,6 +1,5 @@
 import Vue from "vue";
 import store from '../vuex/index'
-// console.log(Object.keys(store.getters.user).length > 1)
 
 
 const authMiddleware = (to, from, next) => {
@@ -52,6 +51,11 @@ export const routes =  {
         {
             path: '/show',
             component: () => import('../pages/Show'),
+            beforeEnter: authMiddleware
+        },
+        {
+            path: '/storeTeam',
+            component: () => import('../pages/CreateTeam'),
             beforeEnter: authMiddleware
         }
     ]

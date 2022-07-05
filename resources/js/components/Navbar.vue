@@ -14,17 +14,27 @@
                     </li>
 
                     <li class="nav-item">
-                        <router-link to="/register" class="text-dark fs-5 text-decoration-none " v-show="show">Register</router-link>
+                        <router-link to="/register" class="text-dark fs-5 text-decoration-none " v-show="show">
+                            Register
+                        </router-link>
                     </li>
 
                     <li class="nav-item">
-                        <router-link to="/" class="text-dark fs-5 text-decoration-none mx-3"  v-show="!show">Home</router-link>
+                        <router-link to="/" class="text-dark fs-5 text-decoration-none mx-3" v-show="!show">Home
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/store" class="text-dark fs-5 text-decoration-none mx-3" v-show="!show">Create Office</router-link>
+                        <router-link to="/store" class="text-dark fs-5 text-decoration-none mx-3" v-show="!show">Create
+                            Office
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/storeTeam" class="text-dark fs-5 text-decoration-none mx-3" v-show="!show">
+                            Create Team
+                        </router-link>
                     </li>
                     <li class="nav-item mx-2">
-                        <a href="#"  class="text-dark fs-5 text-decoration-none"
+                        <a href="#" class="text-dark fs-5 text-decoration-none"
                            v-show="!show" @click.stop.prevent="logout">
                             Log out
                         </a>
@@ -36,7 +46,7 @@
 </template>
 
 <script>
-import {mapGetters,mapActions} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 
 export default {
     name: "Navbar",
@@ -52,17 +62,17 @@ export default {
     methods: {
         ...mapActions(['removeAuth']),
 
-        async logout(){
-          let response = await axios.post('/api/logout')
-          let success = response.data.data.success
-          if (success === 1){
-              let response = await this.removeAuth()
-              if (response.success === 1){
-                  window.axios.defaults.headers.common['Authorization'] = '';
-                  return this.$router.push({path:"/login"})
-              }
-          }
-      }
+        async logout() {
+            let response = await axios.post('/api/logout')
+            let success = response.data.data.success
+            if (success === 1) {
+                let response = await this.removeAuth()
+                if (response.success === 1) {
+                    window.axios.defaults.headers.common['Authorization'] = '';
+                    return this.$router.push({path: "/login"})
+                }
+            }
+        }
     },
     watch: {
         user(val) {

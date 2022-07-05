@@ -65,4 +65,14 @@ class OfficeRepository implements OfficeContract
     {
         return $this->office::destroy($deleteId);
     }
+
+    /**
+     * @param $id
+     * @return Collection
+     */
+    public function getByUserId($id): Collection
+    {
+        return $this->office::where($id)->get();
+    }
+
 }
