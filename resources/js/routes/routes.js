@@ -57,6 +57,12 @@ export const routes =  {
             path: '/storeTeam',
             component: () => import('../pages/CreateTeam'),
             beforeEnter: authMiddleware
+        },
+        {
+            path: '/storeTeamMember/:id',
+            name:'storeMember',
+            component: () => import('../pages/CreateTeamMember'),
+            beforeEnter: authMiddleware
         }
     ]
 }

@@ -99,6 +99,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "index",
@@ -131,8 +148,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (val === true) {
         this.skip = 0;
         this.loader = false;
+        return this.getData();
       }
 
+      this.skip = 0;
       this.getData();
     }
   },
@@ -685,6 +704,74 @@ var render = function () {
                                 ],
                                 2
                               ),
+                              _vm._v(" "),
+                              item.teams.length
+                                ? _c(
+                                    "b-card-text",
+                                    { staticClass: "mt-2 mb-2" },
+                                    [
+                                      _c("h5", { staticClass: "d-inline" }, [
+                                        _vm._v("Teams:"),
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm._l(
+                                        item.teams,
+                                        function (team, index) {
+                                          return _c(
+                                            "div",
+                                            { staticClass: "d-inline" },
+                                            [
+                                              team.office_id === item.id &&
+                                              item.user_id === _vm.user.id
+                                                ? _c(
+                                                    "router-link",
+                                                    {
+                                                      staticClass:
+                                                        "text-decoration-none mx-1",
+                                                      attrs: {
+                                                        to: {
+                                                          name: "storeMember",
+                                                          params: {
+                                                            id: team.id,
+                                                          },
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                    " +
+                                                          _vm._s(team.name) +
+                                                          "\n                                "
+                                                      ),
+                                                    ]
+                                                  )
+                                                : _c(
+                                                    "span",
+                                                    { staticClass: "small" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                    " +
+                                                          _vm._s(
+                                                            index + 1 ===
+                                                              item.teams.length
+                                                              ? team.name + "."
+                                                              : team.name +
+                                                                  "," +
+                                                                  " "
+                                                          ) +
+                                                          "\n                                "
+                                                      ),
+                                                    ]
+                                                  ),
+                                            ],
+                                            1
+                                          )
+                                        }
+                                      ),
+                                    ],
+                                    2
+                                  )
+                                : _vm._e(),
                             ],
                             1
                           ),

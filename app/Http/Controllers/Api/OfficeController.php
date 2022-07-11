@@ -9,10 +9,13 @@ use App\Http\Requests\OfficeUpdateRequest;
 use App\Http\Resources\MessageResource;
 use App\Http\Resources\OfficeCollection;
 use App\Http\Resources\OfficeResource;
+use App\Mail\CreateMemberEmail;
 use App\Models\Office;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OfficeController extends Controller
 {
@@ -38,8 +41,9 @@ class OfficeController extends Controller
         $checked = $request->input('checked') === 'true' ? true : false;
         $skip = intval($request->input('skip'));
         $data = ['checked' => $checked, 'skip' => $skip,'id' => Auth::id()];
-        $offices = $this->officeContract->index($data, ['locations']);
-        return new OfficeCollection(['offices' => $offices, ['offices'], 'success' => 1]);
+        $offices = $this->officeContract->index($data, ['locations','teams']);
+        return new OfficeCollection(['offices' => $offices,'success' => 1]);
+//        return OfficeCollection::collection($offices);
 
     }
 
@@ -79,7 +83,11 @@ class OfficeController extends Controller
         return new MessageResource(['success' => $destroy]);
     }
 
-    public function getByUserId()
+    /**
+     * @return OfficeCollection
+     */
+
+    public function getByUserId(): OfficeCollection
     {
         $offices = $this->officeContract->getByUserId(['user_id' =>Auth::id()]);
         return new OfficeCollection(['offices' => $offices, ['offices'], 'success' => 1]);

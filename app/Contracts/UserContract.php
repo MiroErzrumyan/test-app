@@ -11,5 +11,12 @@ interface UserContract
      * @param $data
      * @return Model
      */
-    public function register($data): Model;
+    public function store($data): Model;
+
+    /**
+     * @param $data
+     * @param $id
+     * @return mixed
+     */
+    public function setMemberPassword($data, $id): mixed;
 }

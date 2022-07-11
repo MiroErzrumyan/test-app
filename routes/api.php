@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 
-
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('/office', OfficeController::class)
         ->except(['create', 'edit']);
@@ -34,5 +33,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('/logout', [UserController::class, 'logout']);
     Route::post('/team', [TeamController::class, 'store']);
+    Route::post('/team/createMember/{id}', [TeamController::class, 'createMember']);
 });
 

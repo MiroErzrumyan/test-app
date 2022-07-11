@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+//use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class OfficeCollection extends ResourceCollection
@@ -13,6 +14,6 @@ class OfficeCollection extends ResourceCollection
      */
     public function toArray($request): array
     {
-        return ['success' => $this['success']->resource,'offices' => $this['offices']->resource ];
+        return ['success' => $this['success']->resource,'offices' => $this['offices']->resource];
     }
 }

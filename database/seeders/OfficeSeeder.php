@@ -16,10 +16,9 @@ class OfficeSeeder extends Seeder
     public function run()
     {
         $offices =  Office::factory(10)->create();
-//        foreach ($offices as $office) {
-//            $office->locations()->attach(rand(1,40));
-//        }
-//            $office = $office->locations()->attach(rand(1,40));
+        foreach ($offices as $office) {
+            $office->locations()->attach(rand(1,40));
+        }
 
     }
 }

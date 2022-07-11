@@ -68,6 +68,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Register",
@@ -78,17 +82,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         email: '',
         name: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        phone: ''
       },
       errors: {
         emailError: '',
         nameError: '',
         passwordError: '',
-        confirmPasswordError: '' // invalidData: '',
-
+        confirmPasswordError: '',
+        phone: ''
       },
       show: true,
-      regex: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      regexEmail: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      regexPhone: /^(\+{0,})(\d{0,})([(]{1}\d{1,3}[)]{0,}){0,}(\s?\d+|\+\d{2,3}\s{1}\d+|\d+){1}[\s|-]?\d+([\s|-]?\d+){1,2}(\s){0,}$/gm
     };
   },
   methods: {
@@ -101,21 +107,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!(!_this.regex.test(_this.form.email) || _this.form.password.length < 6 || _this.form.name.length < 3)) {
+                if (!(!_this.regexEmail.test(_this.form.email) || _this.form.password.length < 6 || _this.form.name.length < 3 || !_this.form.phone.match(_this.regexPhone))) {
+                  _context.next = 16;
+                  break;
+                }
+
+                if (_this.regexEmail.test(_this.form.email)) {
                   _context.next = 5;
                   break;
                 }
 
                 _this.errors.emailError = 'Invalid email';
-                _this.errors.passwordError = 'Your password must be minimum 6 characters';
-                _this.errors.nameError = 'Your name must be minimum 3 characters';
-                return _context.abrupt("return", _this.errors.invalidData = 'Invalid Data');
+                _context.next = 15;
+                break;
 
               case 5:
-                _context.next = 7;
+                if (!(_this.form.password.length < 6)) {
+                  _context.next = 9;
+                  break;
+                }
+
+                _this.errors.passwordError = 'Your password must be minimum 6 characters';
+                _context.next = 15;
+                break;
+
+              case 9:
+                if (!(_this.form.name.length < 3)) {
+                  _context.next = 13;
+                  break;
+                }
+
+                _this.errors.nameError = 'Your name must be minimum 3 characters';
+                _context.next = 15;
+                break;
+
+              case 13:
+                if (_this.form.phone.match(_this.regexPhone)) {
+                  _context.next = 15;
+                  break;
+                }
+
+                return _context.abrupt("return", _this.errors.phone = 'Wrong number');
+
+              case 15:
+                return _context.abrupt("return", _this.errors.invalidData = 'Invalid Data');
+
+              case 16:
+                _context.next = 18;
                 return _this.$store.dispatch('registerRequest', _this.form);
 
-              case 7:
+              case 18:
                 response = _context.sent;
 
                 if (response.success === 1) {
@@ -124,7 +165,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   });
                 }
 
-              case 9:
+              case 20:
               case "end":
                 return _context.stop();
             }
@@ -135,7 +176,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   watch: {
     'form.email': function formEmail(val) {
-      if (!this.regex.test(val)) {
+      if (!this.regexEmail.test(val)) {
         this.errors.emailError = 'Invalid email';
       } else {
         this.errors.emailError = '';
@@ -156,11 +197,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     'form.confirmPassword': function formConfirmPassword(val) {
-      if (val != this.form.password) {
+      if (val !== this.form.password) {
         this.errors.confirmPasswordError = 'Your password must be the same password';
       } else {
         this.errors.confirmPasswordError = '';
       }
+    },
+    'form.phone': function formPhone(val) {
+      if (!this.form.phone.match(this.regexPhone)) {
+        return this.errors.phone = 'Wrong number';
+      }
+
+      this.errors.phone = '';
     }
   }
 });
@@ -184,7 +232,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Raleway:400,700);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".center[data-v-364a2fac] {\n  margin: auto;\n  width: 50%;\n  padding: 10px;\n}\n*[data-v-364a2fac] {\n  overflow: hidden;\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: Raleway, sans-serif;\n}\nbody[data-v-364a2fac] {\n  background: linear-gradient(90deg, #C7C5F4, #776BCC);\n}\n.container[data-v-364a2fac] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n}\n.screen[data-v-364a2fac] {\n  background: linear-gradient(90deg, #5D54A4, #7C78B8);\n  position: relative;\n  height: 600px;\n  width: 360px;\n  box-shadow: 0px 0px 24px #5C5696;\n}\n.screen__content[data-v-364a2fac] {\n  z-index: 1;\n  position: relative;\n  height: 100%;\n}\n.screen__background[data-v-364a2fac] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: 0;\n  -webkit-clip-path: inset(0 0 0 0);\n  clip-path: inset(0 0 0 0);\n}\n.screen__background__shape[data-v-364a2fac] {\n  transform: rotate(45deg);\n  position: absolute;\n}\n.screen__background__shape1[data-v-364a2fac] {\n  height: 520px;\n  width: 520px;\n  background: #FFF;\n  top: -50px;\n  right: 120px;\n  border-radius: 0 72px 0 0;\n}\n.screen__background__shape2[data-v-364a2fac] {\n  height: 220px;\n  width: 220px;\n  background: #6C63AC;\n  top: -172px;\n  right: 0;\n  border-radius: 32px;\n}\n.screen__background__shape3[data-v-364a2fac] {\n  height: 540px;\n  width: 190px;\n  background: linear-gradient(270deg, #5D54A4, #6A679E);\n  top: -24px;\n  right: 0;\n  border-radius: 32px;\n}\n.screen__background__shape4[data-v-364a2fac] {\n  height: 400px;\n  width: 200px;\n  background: #7E7BB9;\n  top: 420px;\n  right: 50px;\n  border-radius: 60px;\n}\n.login[data-v-364a2fac] {\n  width: 320px;\n  padding: 30px;\n}\n.login__field[data-v-364a2fac] {\n  padding: 20px 0px;\n  position: relative;\n}\n.login__icon[data-v-364a2fac] {\n  position: absolute;\n  top: 30px;\n  color: #7875B5;\n}\n.login__input[data-v-364a2fac] {\n  border: none;\n  border-bottom: 2px solid #D1D1D4;\n  background: none;\n  padding: 10px;\n  padding-left: 24px;\n  font-weight: 700;\n  width: 75%;\n  transition: 0.2s;\n}\n.login__input[data-v-364a2fac]:active,\n.login__input[data-v-364a2fac]:focus,\n.login__input[data-v-364a2fac]:hover {\n  outline: none;\n  border-bottom-color: #6A679E;\n}\n.login__submit[data-v-364a2fac] {\n  background: #fff;\n  font-size: 14px;\n  margin-top: 30px;\n  padding: 16px 20px;\n  border-radius: 26px;\n  border: 1px solid #D4D3E8;\n  text-transform: uppercase;\n  font-weight: 700;\n  display: flex;\n  align-items: center;\n  width: 100%;\n  color: #4C489D;\n  box-shadow: 0px 2px 2px #5C5696;\n  cursor: pointer;\n  transition: 0.2s;\n}\n.login__submit[data-v-364a2fac]:active,\n.login__submit[data-v-364a2fac]:focus,\n.login__submit[data-v-364a2fac]:hover {\n  border-color: #6A679E;\n  outline: none;\n}\n.button__icon[data-v-364a2fac] {\n  font-size: 24px;\n  margin-left: auto;\n  color: #7875B5;\n}\n.social-login[data-v-364a2fac] {\n  position: absolute;\n  height: 140px;\n  width: 160px;\n  text-align: center;\n  bottom: 0px;\n  right: 0px;\n  color: #fff;\n}\n.social-icons[data-v-364a2fac] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.social-login__icon[data-v-364a2fac] {\n  padding: 20px 10px;\n  color: #fff;\n  text-decoration: none;\n  text-shadow: 0px 0px 8px #7875B5;\n}\n.social-login__icon[data-v-364a2fac]:hover {\n  transform: scale(1.5);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".center[data-v-364a2fac] {\n  margin: auto;\n  width: 50%;\n  padding: 10px;\n}\n*[data-v-364a2fac] {\n  overflow: hidden;\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  font-family: Raleway, sans-serif;\n}\nbody[data-v-364a2fac] {\n  background: linear-gradient(90deg, #C7C5F4, #776BCC);\n}\n.container[data-v-364a2fac] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n}\n.screen[data-v-364a2fac] {\n  background: linear-gradient(90deg, #5D54A4, #7C78B8);\n  position: relative;\n  height: 650px;\n  width: 360px;\n  box-shadow: 0px 0px 24px #5C5696;\n}\n.screen__content[data-v-364a2fac] {\n  z-index: 1;\n  position: relative;\n  height: 100%;\n}\n.screen__background[data-v-364a2fac] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: 0;\n  -webkit-clip-path: inset(0 0 0 0);\n  clip-path: inset(0 0 0 0);\n}\n.screen__background__shape[data-v-364a2fac] {\n  transform: rotate(45deg);\n  position: absolute;\n}\n.screen__background__shape1[data-v-364a2fac] {\n  height: 520px;\n  width: 520px;\n  background: #FFF;\n  top: -50px;\n  right: 120px;\n  border-radius: 0 72px 0 0;\n}\n.screen__background__shape2[data-v-364a2fac] {\n  height: 220px;\n  width: 220px;\n  background: #6C63AC;\n  top: -172px;\n  right: 0;\n  border-radius: 32px;\n}\n.screen__background__shape3[data-v-364a2fac] {\n  height: 540px;\n  width: 190px;\n  background: linear-gradient(270deg, #5D54A4, #6A679E);\n  top: -24px;\n  right: 0;\n  border-radius: 32px;\n}\n.screen__background__shape4[data-v-364a2fac] {\n  height: 400px;\n  width: 200px;\n  background: #7E7BB9;\n  top: 420px;\n  right: 50px;\n  border-radius: 60px;\n}\n.login[data-v-364a2fac] {\n  width: 320px;\n  padding: 30px;\n}\n.login__field[data-v-364a2fac] {\n  padding: 10px 0px;\n  position: relative;\n}\n.login__icon[data-v-364a2fac] {\n  position: absolute;\n  top: 30px;\n  color: #7875B5;\n}\n.login__input[data-v-364a2fac] {\n  border: none;\n  border-bottom: 2px solid #D1D1D4;\n  background: none;\n  padding: 5px;\n  font-weight: 700;\n  width: 75%;\n  transition: 0.2s;\n}\n.login__input[data-v-364a2fac]:active,\n.login__input[data-v-364a2fac]:focus,\n.login__input[data-v-364a2fac]:hover {\n  outline: none;\n  border-bottom-color: #6A679E;\n}\n.login__submit[data-v-364a2fac] {\n  background: #fff;\n  font-size: 14px;\n  margin-top: 30px;\n  padding: 16px 20px;\n  border-radius: 26px;\n  border: 1px solid #D4D3E8;\n  text-transform: uppercase;\n  font-weight: 700;\n  display: flex;\n  align-items: center;\n  width: 100%;\n  color: #4C489D;\n  box-shadow: 0px 2px 2px #5C5696;\n  cursor: pointer;\n  transition: 0.2s;\n}\n.login__submit[data-v-364a2fac]:active,\n.login__submit[data-v-364a2fac]:focus,\n.login__submit[data-v-364a2fac]:hover {\n  border-color: #6A679E;\n  outline: none;\n}\n.button__icon[data-v-364a2fac] {\n  font-size: 24px;\n  margin-left: auto;\n  color: #7875B5;\n}\n.social-login[data-v-364a2fac] {\n  position: absolute;\n  height: 140px;\n  width: 160px;\n  text-align: center;\n  bottom: 0px;\n  right: 0px;\n  color: #fff;\n}\n.social-icons[data-v-364a2fac] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n.social-login__icon[data-v-364a2fac] {\n  padding: 20px 10px;\n  color: #fff;\n  text-decoration: none;\n  text-shadow: 0px 0px 8px #7875B5;\n}\n.social-login__icon[data-v-364a2fac]:hover {\n  transform: scale(1.5);\n}\ninput[data-v-364a2fac]::-webkit-outer-spin-button,\ninput[data-v-364a2fac]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\ninput[type=number][data-v-364a2fac] {\n  -moz-appearance: textfield;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -397,6 +445,34 @@ var render = function () {
                       {
                         name: "model",
                         rawName: "v-model",
+                        value: _vm.form.phone,
+                        expression: "form.phone",
+                      },
+                    ],
+                    staticClass: "login__input",
+                    attrs: { type: "tel", placeholder: "Phone ex. +374999999" },
+                    domProps: { value: _vm.form.phone },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "phone", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(_vm.errors.phone)),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "login__field" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
                         value: _vm.form.password,
                         expression: "form.password",
                       },
@@ -485,7 +561,7 @@ var render = function () {
                       },
                       [
                         _vm._v(
-                          "\n                            Sign in?\n                        "
+                          "\n                        Sign in?\n                    "
                         ),
                       ]
                     ),

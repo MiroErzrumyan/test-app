@@ -24,8 +24,19 @@ class UserRepository implements UserContract
      * @param $data
      * @return Model
      */
-    public function register($data): Model
+    public function store($data): Model
     {
         return $this->user->create($data);
+    }
+
+    /**
+     * @param $data
+     * @param $id
+     * @return mixed
+     */
+    public function setMemberPassword($data, $id): mixed
+    {
+        return $this->user::where('id' ,$id)->update($data);
+
     }
 }

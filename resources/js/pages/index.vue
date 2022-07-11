@@ -46,6 +46,23 @@
                                     }}
                              </span>
                             </b-card-text>
+                            <b-card-text class="mt-2 mb-2" v-if="item.teams.length">
+                                <h5 class="d-inline">Teams:</h5>
+                                <div v-for="(team,index) in item.teams" class="d-inline">
+                                    <router-link :to="{ name: 'storeMember', params: { id: team.id }}" class="text-decoration-none mx-1"
+                                                 v-if="team.office_id === item.id && item.user_id === user.id">
+                                        {{
+                                            team.name
+                                        }}
+                                    </router-link>
+
+                                    <span class="small" v-else>
+                                        {{
+                                            index + 1 === item.teams.length ? team.name + '.' : team.name + ',' + ' '
+                                        }}
+                                    </span>
+                                </div>
+                            </b-card-text>
                         </b-card>
                     </div>
 
@@ -101,14 +118,15 @@ export default {
     },
     computed: {
         ...mapGetters(['offices', 'user']),
-
     },
     watch: {
         checked(val) {
             if (val === true) {
                 this.skip = 0
                 this.loader = false
+                return this.getData()
             }
+            this.skip = 0
             this.getData()
         },
     },
@@ -179,7 +197,7 @@ export default {
             let response = await this.getOffices({'checked': this.checked, 'skip': this.skip})
             this.loader = false
             if (response.success === 1) {
-                if (response.offices.length > 0){
+                if (response.offices.length > 0) {
                     this.noData = ''
                     this.showAll = true
                     this.skip = this.skip + this.offices.length
